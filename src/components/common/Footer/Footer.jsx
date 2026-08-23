@@ -18,7 +18,7 @@ import AccordionLinksCol from "./AccordionLinksCol";
 
 function Footer() {
   return (
-    <footer className="relative bg-secondary-700 pt-7.5 pb-11.75 lg:pb-4 lg:pt-18 mt-30">
+    <footer className="relative bg-secondary-700 pt-7.5 pb-11.75 lg:pb-4 lg:pt-18">
       <div className="container">
         <div
           id="primary"

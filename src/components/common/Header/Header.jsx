@@ -18,30 +18,32 @@ function Header() {
 
   return (
     <header className="mt-11.5 md:mt-10">
-      <div className="flex-between flex-wrap lg:flex-nowrap">
-        <button onClick={toggleNavmenu} className="lg:hidden size-6.5">
-          <img src={HamburgerMenu} alt="menu" />
-        </button>
+      <div className="container">
+        <div className="flex-between flex-wrap lg:flex-nowrap">
+          <button onClick={toggleNavmenu} className="lg:hidden size-6.5">
+            <img src={HamburgerMenu} alt="menu" />
+          </button>
 
-        <div>
-          <Link to="/">
-            <img className="w-27 lg:w-27 xl:w-full" src={Logo} alt="logo" />
-          </Link>
-          <span className="hidden xl:block font-IRANSansX-Bold text-xs text-868686 mt-2 select-none">
-            فروشگاه لوازم ورزشی فیت‌لند
-          </span>
+          <div>
+            <Link to="/">
+              <img className="w-27 lg:w-27 xl:w-full" src={Logo} alt="logo" />
+            </Link>
+            <span className="hidden xl:block font-IRANSansX-Bold text-xs text-868686 mt-2 select-none">
+              فروشگاه لوازم ورزشی فیت‌لند
+            </span>
+          </div>
+
+          <div className="flex-ic gap-2 lg:gap-4 lg:order-1">
+            <ProfileButton />
+            <CartButton />
+          </div>
+
+          <ProductSearchBox />
         </div>
 
-        <div className="flex-ic gap-2 lg:gap-4 lg:order-1">
-          <ProfileButton />
-          <CartButton />
-        </div>
-
-        <ProductSearchBox />
+        <Navmenu onToggle={toggleNavmenu} isOpen={isNavmenuOpen} />
+        <Navbar />
       </div>
-
-      <Navmenu onToggle={toggleNavmenu} isOpen={isNavmenuOpen} />
-      <Navbar />
     </header>
   );
 }

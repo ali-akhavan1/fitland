@@ -135,6 +135,10 @@
 }
 
 @layer components {
+  .btn {
+    @apply flex-center cursor-pointer;
+  }
+
   /* ===== Footer ===== */
   .footer-item {
     @apply select-none [&>p]:inline-block before:size-1 before:inline-block before:ml-1.5 lg:before:ml-2 before:bg-cbcbcb before:rounded-full;

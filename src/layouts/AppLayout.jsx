@@ -15,16 +15,15 @@ function AppLayout() {
           <p>با عضویت در فیت لند اولین ارسال را مهمون ما باش :)</p>
         </Topbar>
       )}
-      <div className="container">
-        <div>
-          <Header />
+      <div>
+        <Header />
 
-          <div>
-            <Outlet />
-          </div>
-        </div>
+        <main>
+          <Outlet />
+        </main>
+
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }
