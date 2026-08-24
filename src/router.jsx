@@ -6,6 +6,7 @@ import ProductsPage from "./pages/public/Products/ProductsPage";
 import HomePage from "./pages/public/Home/HomePage";
 import NotFound from "./pages/NotFound/NotFound";
 import FAQPage from "./pages/public/FAQ/FAQPage";
+import ProductDetailsPage from "./pages/public/Products/ProductDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, handle: { hasTopbar: true }, element: <HomePage /> },
       { path: "products", element: <ProductsPage /> },
+      { path: "product/:productID", element: <ProductDetailsPage /> },
       { path: "faq", element: <FAQPage /> },
       { path: "cart", element: <div>سبد خرید</div> },
       { path: "dashboard", handle: { isFooterShow: false } },
