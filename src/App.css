@@ -139,6 +139,11 @@
     @apply flex-center cursor-pointer;
   }
 
+  /* ===== Auth ===== */
+  .submit-btn {
+    @apply w-full h-12 text-white rounded-small bg-primary font-IRANSansX-Medium active:scale-98 transition-all;
+  }
+
   /* ===== Footer ===== */
   .footer-item {
     @apply select-none [&>p]:inline-block before:size-1 before:inline-block before:ml-1.5 lg:before:ml-2 before:bg-cbcbcb before:rounded-full;

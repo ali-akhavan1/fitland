@@ -7,6 +7,9 @@ import HomePage from "./pages/public/Home/HomePage";
 import NotFound from "./pages/NotFound/NotFound";
 import FAQPage from "./pages/public/FAQ/FAQPage";
 import ProductDetailsPage from "./pages/public/Products/ProductDetailsPage";
+import LoginForm from "./features/auth/components/LoginForm";
+import RegisterForm from "./features/auth/components/RegisterForm";
+
 
 const router = createBrowserRouter([
   {
@@ -24,6 +27,11 @@ const router = createBrowserRouter([
   {
     path: "auth",
     element: <AuthLayout />,
+    children: [
+      { index: true, element: <LoginForm /> },
+      { path: "login", element: <LoginForm />, handle: { stage: "otp" } },
+      { path: "register", element: <RegisterForm />, handle: { stage: "register" } },
+    ],
   },
   {
     path: "/*",
