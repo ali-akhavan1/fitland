@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 function useCountdown(duration = 120) {
-  const [counter, setCounter] = useState(duration);
+  const [counter, setCounter] = useState(0);
   const timerRef = useRef(null);
 
   useEffect(() => {
@@ -21,16 +21,28 @@ function useCountdown(duration = 120) {
   }, [counter]);
 
   const getFormattedCounter = () => {
-    const minutes = Math.floor(counter / 60).toString().padStart(2, 0);
+    const minutes = Math.floor(counter / 60)
+      .toString()
+      .padStart(2, 0);
     const seconds = counter % 60;
     return `${minutes}:${seconds.toString().padStart(2, 0)}`;
   };
 
-  const restart = () => {
+  const restartCountdown = () => {
     setCounter(duration);
   };
 
-  return { counter, restart, getFormattedCounter, isExpired: counter === 0 };
+  const resetCountdown = () => {
+    setCounter(0);
+  };
+
+  return {
+    counter,
+    restartCountdown,
+    resetCountdown,
+    getFormattedCounter,
+    isExpired: counter === 0,
+  };
 }
 
 export default useCountdown;

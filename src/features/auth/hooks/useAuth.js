@@ -11,10 +11,8 @@ function useAuth() {
   const [identifier, setIdentifier] = useState("");
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
-  const { restart, getFormattedCounter, isExpired } = useCountdown(120);
-
-
-  
+  const { restartCountdown, resetCountdown, getFormattedCounter, isExpired } =
+    useCountdown(120);
 
   const sendOtpToUser = async () => {
     // validation
@@ -23,9 +21,8 @@ function useAuth() {
       const res = await authService.sendOTP({ identifier: identifier.trim() });
       console.log(res);
       setIsSentOtp(true);
-      restart();
+      restartCountdown();
       navigate("/auth/login");
-
     } catch (err) {
       console.log(err.data);
       toast.error(err.data.message);
@@ -44,7 +41,6 @@ function useAuth() {
         return;
       }
       navigate("/", { replace: true });
-
     } catch (err) {
       console.log(err.data);
       toast.error(err.data.message);
@@ -56,7 +52,7 @@ function useAuth() {
       const res = await authService.sendOTP({ identifier: identifier.trim() });
       console.log(res);
       setIsSentOtp(true);
-      restart();
+      restartCountdown();
     } catch (err) {
       toast.error(err.data.message);
     }
@@ -78,6 +74,7 @@ function useAuth() {
     setIsSentOtp(false);
     setIdentifier("");
     setOtp("");
+    resetCountdown();
   };
 
   return {
@@ -90,7 +87,7 @@ function useAuth() {
     changeIdentifier,
     changeOtp,
     getFormattedCounter,
-    restart,
+    restartCountdown,
     isExpired,
   };
 }
