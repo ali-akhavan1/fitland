@@ -8,17 +8,21 @@ import Abstract2 from "../../src/assets/images/auth/auth-abstract2.png";
 import defaultCover from "@/assets/images/auth/login.png";
 import otpCover from "@/assets/images/auth/otp.jpg";
 import registerCover from "@/assets/images/auth/register.png";
+import { useState } from "react";
+import useAuth from "@/features/auth/hooks/useAuth";
 
 function AuthLayout() {
   const matches = useMatches();
   const match = matches.find((match) => match.handle?.stage);
   const stage = match?.handle.stage;
-  
+
+  const auth = useAuth();
+
 
   return (
     <div className="grid grid-cols-2 h-screen">
       <main className="w-full flex-center relative overflow-hidden">
-        <Outlet />
+        <Outlet context={auth} />
 
         <img
           src={Abstract1}
@@ -34,7 +38,9 @@ function AuthLayout() {
 
       <div className="relative flex-center flex-col gap-6 bg-linear-[to_top,rgba(0,0,0,0.8),rgba(0,0,0,0.8)] bg-center bg-no-repeat">
         <img
-          src={!stage ? defaultCover : stage === "otp" ? otpCover : registerCover}
+          src={
+            !stage ? defaultCover : stage === "otp" ? otpCover : registerCover
+          }
           alt=""
           className="absolute w-full h-full object-cover -z-10"
         />

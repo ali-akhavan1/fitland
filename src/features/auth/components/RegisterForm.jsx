@@ -1,12 +1,13 @@
-import { Link } from "react-router";
+import { Link, useOutletContext } from "react-router";
 
 import { ArrowRight } from "iconsax-reactjs";
 
 import RegisterInput from "./RegisterInput";
 import useRegister from "../hooks/useRegister";
 
-function RegisterForm() {
+function RegisterForm({ number }) {
   const { register, handleRegister, changeRegister } = useRegister();
+  const { resetRegister } = useOutletContext();
 
   return (
     <div className="w-89.5 lg:w-114 p-6 lg:p-8 border bg-white border-ededed rounded-small font-IRANSansX-Medium shadow-[0_0_12px_rgba(0,0,0,0.08)]">
@@ -60,12 +61,18 @@ function RegisterForm() {
         </div>
       </form>
 
-      <Link to="/auth/login" className="flex-ic gap-2 w-fit mt-8">
+      <Link
+        to="/auth/login"
+        className="flex-ic gap-2 w-fit mt-8"
+        onClick={resetRegister}
+      >
         <ArrowRight />
         <span className="text-lg font-IRANSansX-DemiBold text-404040">
           صفحه قبلی
         </span>
       </Link>
+
+      <p>{number}</p>
     </div>
   );
 }

@@ -19,12 +19,12 @@ function useAuth() {
 
     try {
       const res = await authService.sendOTP({ identifier: identifier.trim() });
-      console.log(res);
+      console.log(res.data);
       setIsSentOtp(true);
       restartCountdown();
       navigate("/auth/login");
     } catch (err) {
-      console.log(err.data);
+      console.log(err);
       toast.error(err.data.message);
     }
   };
@@ -50,7 +50,7 @@ function useAuth() {
   const resendOtp = async () => {
     try {
       const res = await authService.sendOTP({ identifier: identifier.trim() });
-      console.log(res);
+      console.log(res.data);
       setIsSentOtp(true);
       restartCountdown();
     } catch (err) {
@@ -77,6 +77,11 @@ function useAuth() {
     resetCountdown();
   };
 
+  const resetRegister = () => {
+    setOtp("");
+    resetCountdown();
+  };
+
   return {
     isSentOtp,
     identifier,
@@ -84,10 +89,12 @@ function useAuth() {
     handleLogin,
     resendOtp,
     resetLogin,
+    resetRegister,
     changeIdentifier,
     changeOtp,
     getFormattedCounter,
     restartCountdown,
+    resetCountdown,
     isExpired,
   };
 }
