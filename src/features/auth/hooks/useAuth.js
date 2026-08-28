@@ -5,6 +5,9 @@ import { toast } from "sonner";
 
 import * as authService from "../services/auth.service";
 import useCountdown from "./useCountdown";
+import validateIdentifier from "../validators";
+import { validateSchema } from "@/utils/helper";
+import { otpSchema } from "../validators/schema";
 
 function useAuth() {
   const [isSentOtp, setIsSentOtp] = useState(false);
@@ -15,7 +18,8 @@ function useAuth() {
     useCountdown(120);
 
   const sendOtpToUser = async () => {
-    // validation
+    const isIdentifierValid = validateIdentifier(identifier);
+    if(!isIdentifierValid) return;
 
     try {
       const res = await authService.sendOTP({ identifier: identifier.trim() });
@@ -30,6 +34,9 @@ function useAuth() {
   };
 
   const verifyOtp = async () => {
+    const isOtpValid = validateSchema(otpSchema, otp.trim());
+    if(!isOtpValid) return;
+
     const body = { identifier, otp: otp.trim() };
 
     try {

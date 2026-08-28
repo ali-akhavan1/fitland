@@ -4,6 +4,8 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 import * as authService from "../services/auth.service";
+import { validateSchema } from "@/utils/helper";
+import { registerSchema } from "../validators/schema";
 
 function useRegister() {
   const [register, setRegister] = useState({
@@ -18,11 +20,8 @@ function useRegister() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
-    if (!register.acceptTerms) {
-      toast.error("لطفا قوانین را بپذیرید");
-      return;
-    }
+    const isRegistrationValid = validateSchema(registerSchema, register);
+    if(!isRegistrationValid) return;
 
     try {
       const res = await authService.register(register);
