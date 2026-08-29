@@ -6,10 +6,11 @@ import RegisterInput from "./RegisterInput";
 import useRegister from "../hooks/useRegister";
 
 function RegisterForm() {
-  const { register, handleRegister, changeRegister } = useRegister();
+  const { register, handleRegister, changeRegister, handleBlur } =
+    useRegister();
   const { resetRegister } = useOutletContext();
 
-  console.log("Reg Form")
+  console.log("Reg Form");
 
   return (
     <div className="w-89.5 lg:w-114 p-6 lg:p-8 border bg-white border-ededed rounded-small font-IRANSansX-Medium shadow-[0_0_12px_rgba(0,0,0,0.08)]">
@@ -23,6 +24,7 @@ function RegisterForm() {
             onChange={changeRegister}
             label="نام و نام خانوادگی *"
             placeholer="نام خود را به فارسی وارد کنید"
+            handleBlur={handleBlur}
           />
 
           <RegisterInput
@@ -31,6 +33,7 @@ function RegisterForm() {
             onChange={changeRegister}
             label="شماره تلفن همراه *"
             placeholer="*********09"
+            handleBlur={handleBlur}
           />
 
           <RegisterInput
@@ -40,6 +43,7 @@ function RegisterForm() {
             label="ایمیل (اختیاری)"
             type="email"
             placeholer="Example@gmail.coms"
+            handleBlur={handleBlur}
           />
         </div>
 
@@ -73,7 +77,6 @@ function RegisterForm() {
           صفحه قبلی
         </span>
       </Link>
-
     </div>
   );
 }

@@ -143,6 +143,12 @@
   .submit-btn {
     @apply w-full h-12 text-white rounded-small bg-primary font-IRANSansX-Medium active:scale-98 transition-all;
   }
+  .input-error {
+    @apply text-error-3 bg-[#FFEBE9] border-error-3;
+  }
+  .input-success {
+    @apply text-success-3 bg-[#EFF7F6] border-success-3;
+  }
 
   /* ===== Footer ===== */
   .footer-item {

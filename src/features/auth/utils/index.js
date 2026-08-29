@@ -10,8 +10,19 @@ const getIdentifierType = (identifier) => {
   if (isMatchMobile) {
     return "mobile";
   }
-
   return "unknown";
 };
 
-export { getIdentifierType };
+const getValidationIssues = (schema, value) => {
+  const result = schema.safeParse(value);
+
+  if (result.error) {
+    return result.error.issues
+      .flatMap((issue) => issue.path)
+      .filter((issue) => issue !== "acceptTerms");
+  }
+
+  return [];
+};
+
+export { getIdentifierType, getValidationIssues };

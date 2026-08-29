@@ -3,6 +3,7 @@ import { Link, useMatches, useOutletContext } from "react-router";
 import { ArrowRight } from "iconsax-reactjs";
 
 import useAuth from "../hooks/useAuth";
+import Close from "@/components/ui/Icon/Close";
 
 function LoginForm() {
   const {
@@ -16,6 +17,8 @@ function LoginForm() {
     changeOtp,
     getFormattedCounter,
     isExpired,
+    resetIdentifier,
+    error,
   } = useOutletContext();
 
   return (
@@ -40,13 +43,30 @@ function LoginForm() {
               className="px-3 w-full h-12 rounded-small border border-adadad mt-2"
             />
           ) : (
-            <input
-              value={identifier}
-              onChange={changeIdentifier}
-              type="text"
-              placeholder="*********09 یا Example@gmail.com"
-              className="px-3 w-full h-12 rounded-small border border-adadad mt-2"
-            />
+            <div
+              className={`${error ? "text-error-3 border-error-3 bg-[#FFEBE9]" : "border-adadad "} flex-between w-full h-12 rounded-small border pl-3 mt-2`}
+            >
+              <input
+                value={identifier}
+                onChange={changeIdentifier}
+                type="text"
+                placeholder="*********09 یا Example@gmail.com"
+                className="size-full px-3"
+              />
+              {identifier && (
+                <button
+                  className={`${error ? "text-error-3" : ""} size-4.5 shrink-0`}
+                  onClick={resetIdentifier}
+                >
+                  <Close />
+                </button>
+              )}
+            </div>
+          )}
+          {error && (
+            <p className="text-error-3 mt-2">
+              لطفا شماره همراه خود را به صورت صحیح وارد نمایید
+            </p>
           )}
 
           {isSentOtp && (

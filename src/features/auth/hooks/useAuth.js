@@ -13,14 +13,19 @@ function useAuth() {
   const [isSentOtp, setIsSentOtp] = useState(false);
   const [identifier, setIdentifier] = useState("");
   const [otp, setOtp] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { restartCountdown, resetCountdown, getFormattedCounter, isExpired } =
     useCountdown(120);
 
   const sendOtpToUser = async () => {
     const isIdentifierValid = validateIdentifier(identifier);
-    if (!isIdentifierValid) return;
+    if (!isIdentifierValid) {
+      setError(true);
+      return;
+    }
 
+    setError(false);
     try {
       const res = await authService.sendOTP({ identifier: identifier.trim() });
       console.log(res.data);
@@ -82,12 +87,17 @@ function useAuth() {
     setIsSentOtp(false);
     setIdentifier("");
     setOtp("");
+    setError(null);
     resetCountdown();
   };
 
   const resetRegister = () => {
     setOtp("");
     resetCountdown();
+  };
+
+  const resetIdentifier = () => {
+    setIdentifier("");
   };
 
   return {
@@ -103,7 +113,9 @@ function useAuth() {
     getFormattedCounter,
     restartCountdown,
     resetCountdown,
+    resetIdentifier,
     isExpired,
+    error,
   };
 }
 

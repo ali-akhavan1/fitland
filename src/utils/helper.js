@@ -1,5 +1,10 @@
 import { toast } from "sonner";
 
+const replaceClass = (elem, removeClass, addClass) => {
+  elem.classList.remove(removeClass);
+  elem.classList.add(addClass);
+};
+
 const validateSchema = (schema, value) => {
   const result = schema.safeParse(value);
   const isValid = result.success;
@@ -11,4 +16,4 @@ const validateSchema = (schema, value) => {
   return true;
 };
 
-export { validateSchema };
+export { validateSchema, replaceClass};

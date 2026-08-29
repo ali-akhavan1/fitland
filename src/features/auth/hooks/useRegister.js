@@ -4,8 +4,9 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 import * as authService from "../services/auth.service";
-import { validateSchema } from "@/utils/helper";
+import { replaceClass, validateSchema } from "@/utils/helper";
 import { registerSchema } from "../validators/schema";
+import { getValidationIssues } from "../utils";
 
 function useRegister() {
   const [register, setRegister] = useState({
@@ -14,7 +15,6 @@ function useRegister() {
     email: "",
     acceptTerms: false,
   });
-
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -33,6 +33,19 @@ function useRegister() {
     }
   };
 
+  const handleBlur = (input) => {
+    const zodIssues = getValidationIssues(registerSchema, register);
+    const hasError = zodIssues.includes(input.name);
+
+    if (input.value && hasError) {
+      replaceClass(input, "input-success", "input-error")
+    } else if (input.value && !hasError) {
+      replaceClass(input, "input-error", "input-success")
+    } else {
+      input.classList.remove("input-error", "input-success");
+    }
+  };
+
   const changeRegister = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -48,6 +61,7 @@ function useRegister() {
     register,
     handleRegister,
     changeRegister,
+    handleBlur,
   };
 }
 
