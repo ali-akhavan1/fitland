@@ -19,7 +19,7 @@ function useAuth() {
 
   const sendOtpToUser = async () => {
     const isIdentifierValid = validateIdentifier(identifier);
-    if(!isIdentifierValid) return;
+    if (!isIdentifierValid) return;
 
     try {
       const res = await authService.sendOTP({ identifier: identifier.trim() });
@@ -35,13 +35,14 @@ function useAuth() {
 
   const verifyOtp = async () => {
     const isOtpValid = validateSchema(otpSchema, otp.trim());
-    if(!isOtpValid) return;
+    if (!isOtpValid) return;
 
     const body = { identifier, otp: otp.trim() };
 
     try {
       const res = await authService.verifyOTP(body);
       console.log(res);
+      resetCountdown();
       toast.success(res.message);
       if (res.data.isNewUser) {
         navigate("/auth/register");

@@ -15,7 +15,6 @@ function LoginForm() {
     changeIdentifier,
     changeOtp,
     getFormattedCounter,
-    restartCountdown,
     isExpired,
   } = useOutletContext();
 

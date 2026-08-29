@@ -1,47 +1,61 @@
 import { useEffect, useRef, useState } from "react";
 
-function useCountdown(duration = 120) {
-  const [counter, setCounter] = useState(0);
-  const timerRef = useRef(null);
+function useCountdown(initialTime) {
+  const [timeRemaining, setTimeRemaining] = useState(initialTime);
+  const [started, setStarted] = useState(false);
+  const intervalRef = useRef(null);
+
+  const clearTimer = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
 
   useEffect(() => {
-    if (counter < 1) {
-      clearInterval(timerRef.current);
+    if (!started) {
+      clearTimer();
       return;
     }
 
-    const interval = setInterval(() => {
-      setCounter((counter) => counter - 1);
+    intervalRef.current = setInterval(() => {
+      setTimeRemaining((prevTime) => {
+        if (prevTime < 1) {
+          clearInterval(intervalRef.current);
+          setStarted(false);
+          return 0;
+        }
+        return prevTime - 1;
+      });
     }, 1000);
-    timerRef.current = interval;
 
-    return () => {
-      clearInterval(timerRef.current);
-    };
-  }, [counter]);
+    return clearTimer;
+  }, [started]);
+
 
   const getFormattedCounter = () => {
-    const minutes = Math.floor(counter / 60)
+    const minutes = Math.floor(timeRemaining / 60)
       .toString()
-      .padStart(2, 0);
-    const seconds = counter % 60;
-    return `${minutes}:${seconds.toString().padStart(2, 0)}`;
+      .padStart(2, "0");
+    const seconds = timeRemaining % 60;
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
   const restartCountdown = () => {
-    setCounter(duration);
+    setTimeRemaining(initialTime);
+    setStarted(true);
   };
 
   const resetCountdown = () => {
-    setCounter(0);
+    setTimeRemaining(0);
   };
 
   return {
-    counter,
+    timeRemaining,
     restartCountdown,
     resetCountdown,
     getFormattedCounter,
-    isExpired: counter === 0,
+    isExpired: timeRemaining === 0,
   };
 }
 

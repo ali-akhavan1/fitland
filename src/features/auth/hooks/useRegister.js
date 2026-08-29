@@ -15,20 +15,18 @@ function useRegister() {
     acceptTerms: false,
   });
 
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     const isRegistrationValid = validateSchema(registerSchema, register);
-    if(!isRegistrationValid) return;
+    if (!isRegistrationValid) return;
 
     try {
       const res = await authService.register(register);
       console.log(res);
       toast.success(res.message);
       navigate("/");
-      
     } catch (err) {
       console.log(err.data);
       toast.error(err.data.message);
@@ -38,10 +36,9 @@ function useRegister() {
   const changeRegister = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    
+
     if (name === "acceptTerms") {
       setRegister((prev) => ({ ...prev, acceptTerms: !prev.acceptTerms }));
-
     } else {
       setRegister((prev) => ({ ...prev, [name]: value }));
     }

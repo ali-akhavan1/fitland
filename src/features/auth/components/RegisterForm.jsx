@@ -5,9 +5,11 @@ import { ArrowRight } from "iconsax-reactjs";
 import RegisterInput from "./RegisterInput";
 import useRegister from "../hooks/useRegister";
 
-function RegisterForm({ number }) {
+function RegisterForm() {
   const { register, handleRegister, changeRegister } = useRegister();
   const { resetRegister } = useOutletContext();
+
+  console.log("Reg Form")
 
   return (
     <div className="w-89.5 lg:w-114 p-6 lg:p-8 border bg-white border-ededed rounded-small font-IRANSansX-Medium shadow-[0_0_12px_rgba(0,0,0,0.08)]">
@@ -72,7 +74,6 @@ function RegisterForm({ number }) {
         </span>
       </Link>
 
-      <p>{number}</p>
     </div>
   );
 }
