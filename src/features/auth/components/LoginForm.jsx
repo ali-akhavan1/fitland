@@ -4,17 +4,19 @@ import { ArrowRight } from "iconsax-reactjs";
 
 import useAuth from "../hooks/useAuth";
 import Close from "@/components/ui/Icon/Close";
+import OtpInputs from "./OtpInputs";
+import { OTP_LENGTH } from "@/constants/auth";
 
 function LoginForm() {
   const {
     isSentOtp,
     identifier,
     otp,
+    setOtp,
     handleLogin,
     resendOtp,
     resetLogin,
     changeIdentifier,
-    changeOtp,
     getFormattedCounter,
     isExpired,
     resetIdentifier,
@@ -36,12 +38,7 @@ function LoginForm() {
           )}
 
           {isSentOtp ? (
-            <input
-              value={otp}
-              onChange={changeOtp}
-              type="text"
-              className="px-3 w-full h-12 rounded-small border border-adadad mt-2"
-            />
+            <OtpInputs length={OTP_LENGTH} otp={otp} setOtp={setOtp} />
           ) : (
             <div
               className={`${error ? "text-error-3 border-error-3 bg-[#FFEBE9]" : "border-adadad "} flex-between w-full h-12 rounded-small border pl-3 mt-2`}

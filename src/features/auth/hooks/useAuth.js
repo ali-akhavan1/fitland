@@ -8,11 +8,12 @@ import useCountdown from "./useCountdown";
 import validateIdentifier from "../validators";
 import { validateSchema } from "@/utils/helper";
 import { otpSchema } from "../validators/schema";
+import { OTP_LENGTH } from "@/constants/auth";
 
 function useAuth() {
   const [isSentOtp, setIsSentOtp] = useState(false);
   const [identifier, setIdentifier] = useState("");
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState(Array(OTP_LENGTH).fill(""));
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { restartCountdown, resetCountdown, getFormattedCounter, isExpired } =
@@ -39,10 +40,11 @@ function useAuth() {
   };
 
   const verifyOtp = async () => {
-    const isOtpValid = validateSchema(otpSchema, otp.trim());
+    let finalOTP = otp.join("").trim();
+    const isOtpValid = validateSchema(otpSchema, finalOTP);
     if (!isOtpValid) return;
 
-    const body = { identifier, otp: otp.trim() };
+    const body = { identifier, otp: finalOTP };
 
     try {
       const res = await authService.verifyOTP(body);
@@ -81,18 +83,18 @@ function useAuth() {
 
   const changeIdentifier = (e) => setIdentifier(e.target.value);
 
-  const changeOtp = (e) => setOtp(e.target.value);
+  // const changeOtp = (e) => setOtp(e.target.value);
 
   const resetLogin = () => {
     setIsSentOtp(false);
     setIdentifier("");
-    setOtp("");
+    setOtp(Array(OTP_LENGTH).fill(""));
     setError(null);
     resetCountdown();
   };
 
   const resetRegister = () => {
-    setOtp("");
+    setOtp(Array(OTP_LENGTH).fill(""));
     resetCountdown();
   };
 
@@ -109,7 +111,7 @@ function useAuth() {
     resetLogin,
     resetRegister,
     changeIdentifier,
-    changeOtp,
+    setOtp,
     getFormattedCounter,
     restartCountdown,
     resetCountdown,
