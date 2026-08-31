@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 
 import { toast } from "sonner";
 
@@ -16,8 +16,16 @@ function useAuth() {
   const [otp, setOtp] = useState(Array(OTP_LENGTH).fill(""));
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const { restartCountdown, resetCountdown, getFormattedCounter, isExpired } =
     useCountdown(120);
+
+  useEffect(() => {
+    const isLoginRoute = location.pathname.includes("login");
+    if (isLoginRoute && !isSentOtp) {
+      navigate("/auth");
+    }
+  }, []);
 
   const sendOtpToUser = async () => {
     const isIdentifierValid = validateIdentifier(identifier);
