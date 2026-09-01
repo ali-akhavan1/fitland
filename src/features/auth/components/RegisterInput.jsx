@@ -22,7 +22,7 @@ function RegisterInput({
         onChange={onChange}
         placeholder={placeholer}
         type={type}
-        className={`px-3 w-full h-12 rounded-small border mt-2`}
+        className={`px-3 w-full h-12 rounded-small placeholder:text-adadad border border-adadad text-404040 mt-2`}
       />
     </div>
   );

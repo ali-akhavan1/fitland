@@ -144,10 +144,13 @@
     @apply w-full h-12 text-white rounded-small bg-primary font-IRANSansX-Medium active:scale-98 transition-all;
   }
   .input-error {
-    @apply text-error-3 bg-[#FFEBE9] border-error-3;
+    @apply text-error-3! bg-[#FFEBE9] border-error-3;
   }
   .input-success {
-    @apply text-success-3 bg-[#EFF7F6] border-success-3;
+    @apply text-success-3! bg-[#EFF7F6] border-success-3;
+  }
+  .auth-form-wrapper {
+    @apply max-[380px]:w-full w-89.5 md:w-103 lg:w-114 py-8 px-6 lg:p-8 border bg-white border-ededed rounded-small font-IRANSansX-Medium shadow-[0_0_12px_rgba(0,0,0,0.08)];
   }
 
   /* ===== Footer ===== */

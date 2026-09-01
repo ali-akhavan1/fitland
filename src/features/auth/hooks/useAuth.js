@@ -28,13 +28,13 @@ function useAuth() {
   }, []);
 
   const sendOtpToUser = async () => {
+    setError(false);
     const isIdentifierValid = validateIdentifier(identifier);
     if (!isIdentifierValid) {
       setError(true);
       return;
     }
 
-    setError(false);
     try {
       const res = await authService.sendOTP({ identifier: identifier.trim() });
       console.log(res.data);

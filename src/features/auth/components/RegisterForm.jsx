@@ -4,6 +4,7 @@ import { ArrowRight } from "iconsax-reactjs";
 
 import RegisterInput from "./RegisterInput";
 import useRegister from "../hooks/useRegister";
+import Checkbox from "@/components/ui/Checkbox";
 
 function RegisterForm() {
   const { register, handleRegister, changeRegister, handleBlur } =
@@ -11,9 +12,11 @@ function RegisterForm() {
   const { resetRegister } = useOutletContext();
 
   return (
-    <div className="w-89.5 lg:w-114 p-6 lg:p-8 border bg-white border-ededed rounded-small font-IRANSansX-Medium shadow-[0_0_12px_rgba(0,0,0,0.08)]">
+    <div className="auth-form-wrapper">
       <form action="" className="space-y-8">
-        <h2 className="text-[28px]">ثبت‌نام</h2>
+        <h2 className="font-IRANSansX-DemiBold lg:font-IRANSansX-Medium text-lg lg:text-[28px]">
+          ثبت‌نام
+        </h2>
 
         <div className="text-sm space-y-8">
           <RegisterInput
@@ -50,9 +53,8 @@ function RegisterForm() {
         </button>
 
         <div className="flex-ic gap-2 text-sm font-IRANSansX-Medium">
-          <input
+          <Checkbox
             name="acceptTerms"
-            type="checkbox"
             checked={register.acceptTerms}
             onChange={changeRegister}
           />
@@ -67,7 +69,7 @@ function RegisterForm() {
 
       <Link
         to="/auth/login"
-        className="flex-ic gap-2 w-fit mt-8"
+        className="hidden lg:flex-ic gap-2 w-fit mt-8"
         onClick={resetRegister}
       >
         <ArrowRight />
