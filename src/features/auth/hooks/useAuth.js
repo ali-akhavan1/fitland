@@ -13,6 +13,7 @@ import { OTP_LENGTH } from "@/constants/auth";
 function useAuth() {
   const [isSentOtp, setIsSentOtp] = useState(false);
   const [identifier, setIdentifier] = useState("");
+  const [identifierType, setIdentifierType] = useState("");
   const [otp, setOtp] = useState(Array(OTP_LENGTH).fill(""));
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ function useAuth() {
       console.log(res.data);
       setIsSentOtp(true);
       restartCountdown();
+      setIdentifierType(res.data.type);
       navigate("/auth/login");
     } catch (err) {
       console.log(err);
@@ -49,13 +51,15 @@ function useAuth() {
 
   const verifyOtp = async () => {
     let finalOTP = otp.join("").trim();
-    const isOtpValid = validateSchema(otpSchema, finalOTP);
+    const isOtpValid = validateSchema(otpSchema, finalOTP, true);
     if (!isOtpValid) return;
-
-    const body = { identifier, otp: finalOTP };
+    if(isExpired) {
+      toast.error("برای شماره موبایل یا ایمیل خود کد تأیید دریافت کنید")
+      return;
+    }
 
     try {
-      const res = await authService.verifyOTP(body);
+      const res = await authService.verifyOTP({ identifier, otp: finalOTP });
       console.log(res);
       resetCountdown();
       toast.success(res.message);
@@ -91,8 +95,6 @@ function useAuth() {
 
   const changeIdentifier = (e) => setIdentifier(e.target.value);
 
-  // const changeOtp = (e) => setOtp(e.target.value);
-
   const resetLogin = () => {
     setIsSentOtp(false);
     setIdentifier("");
@@ -113,6 +115,7 @@ function useAuth() {
   return {
     isSentOtp,
     identifier,
+    identifierType,
     otp,
     handleLogin,
     resendOtp,

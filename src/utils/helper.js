@@ -5,15 +5,19 @@ const replaceClass = (elem, removeClass, addClass) => {
   elem.classList.add(addClass);
 };
 
-const validateSchema = (schema, value) => {
+const normalize = (value) => {
+  if (typeof value !== "string") return value;
+  return value.split(" ").filter(char => char).join(" ");
+};
+
+const validateSchema = (schema, value, showToast = false) => {
   const result = schema.safeParse(value);
   const isValid = result.success;
-
   if (!isValid) {
-    toast.error(result.error.issues?.at(0).message);
+    showToast && toast.error(result.error.issues?.at(0).message);
     return false;
   }
   return true;
 };
 
-export { validateSchema, replaceClass};
+export { validateSchema, replaceClass, normalize };

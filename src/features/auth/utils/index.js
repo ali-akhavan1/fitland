@@ -1,7 +1,7 @@
 const getIdentifierType = (identifier) => {
   const isMatchMobile = /^\d+$/.test(identifier.trim());
 
-  const haveCharacters = identifier.includes("@") || identifier.includes("com");
+  const haveCharacters = /^(\d*[^\s\d]+\d*)+$/.test(identifier.trim())
 
   if (haveCharacters) {
     return "email";
@@ -25,4 +25,22 @@ const getValidationIssues = (schema, value) => {
   return [];
 };
 
-export { getIdentifierType, getValidationIssues };
+
+const getErrorType = (identifier) => {
+  const type = getIdentifierType(identifier);
+
+  switch (type) {
+    case "mobile": {
+      return "شماره همراه";
+    }
+    case "email": {
+      return "ایمیل";
+    }
+    default: {
+      return "شماره‌همراه یا ایمیل";
+    }
+  }
+};
+
+
+export { getIdentifierType, getValidationIssues, getErrorType };

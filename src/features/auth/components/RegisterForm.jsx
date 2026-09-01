@@ -13,7 +13,7 @@ function RegisterForm() {
 
   return (
     <div className="auth-form-wrapper">
-      <form action="" className="space-y-8">
+      <form action="" className="space-y-8 select-none">
         <h2 className="font-IRANSansX-DemiBold lg:font-IRANSansX-Medium text-lg lg:text-[28px]">
           ثبت‌نام
         </h2>
@@ -33,8 +33,9 @@ function RegisterForm() {
             value={register.mobile}
             onChange={changeRegister}
             label="شماره تلفن همراه *"
-            placeholer="*********09"
+            placeholer="09*********"
             handleBlur={handleBlur}
+            rtl
           />
 
           <RegisterInput

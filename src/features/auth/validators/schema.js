@@ -17,13 +17,11 @@ const registerSchema = z.object({
     .string()
     .trim()
     .min(3, { error: "نام و نام خانوادگی معتبر نمی‌باشد" })
-    .max(40, { error: "نام نمی‌تواند بیشتر از 40 حرف باشد" }),
+    .max(30, { error: "نام نمی‌تواند بیشتر از 30 حرف باشد" })
+    .regex(/^[آ-ی\s\u200C]+$/, "نام و نام‌خانوادگی باید فارسی باشد"),
 
   mobile: mobileSchema,
-  email: z.union([
-    z.string().trim().email({ error: "ایمیل معتبر نمی‌باشد" }),
-    z.literal(""),
-  ]),
+  email: z.union([emailSchema, z.literal("")]),
 
   acceptTerms: z.literal(true, { error: "لطفا قوانین سایت را بپذیرید" }),
 });

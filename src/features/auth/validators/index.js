@@ -14,19 +14,16 @@ const getIdentifierSchema = (value) => {
   }
 };
 
-const validateIdentifier = (value) => {
+const validateIdentifier = (value, showToast = false) => {
   const schema = getIdentifierSchema(value);
 
-  if (!schema) {
-    toast.error("شماره‌موبایل یا ایمیل معتبر نمی‌باشد");
-    return false;
-  }
+  if (!schema) return false;
 
   const result = schema.safeParse(value.trim());
   const isValid = result.success;
 
   if (!isValid) {
-    toast.error(result.error.issues?.at(0).message);
+    showToast && toast.error(result.error.issues?.at(0).message);
     return false;
   }
 

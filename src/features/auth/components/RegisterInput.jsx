@@ -7,6 +7,7 @@ function RegisterInput({
   name,
   onChange,
   type = "text",
+  rtl,
   handleBlur,
 }) {
   const inputRef = useRef(null);
@@ -22,7 +23,8 @@ function RegisterInput({
         onChange={onChange}
         placeholder={placeholer}
         type={type}
-        className={`px-3 w-full h-12 rounded-small placeholder:text-adadad border border-adadad text-404040 mt-2`}
+        dir={rtl && "ltr"}
+        className={`${rtl ? "text-right" : ""} px-3 w-full h-12 rounded-small placeholder:text-adadad border border-adadad text-404040 mt-2`}
       />
     </div>
   );

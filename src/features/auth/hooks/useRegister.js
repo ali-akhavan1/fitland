@@ -19,7 +19,7 @@ function useRegister() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const isRegistrationValid = validateSchema(registerSchema, register);
+    const isRegistrationValid = validateSchema(registerSchema, register, true);
     if (!isRegistrationValid) return;
 
     try {

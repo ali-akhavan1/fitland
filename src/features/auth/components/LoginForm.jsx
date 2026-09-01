@@ -6,6 +6,7 @@ import useAuth from "../hooks/useAuth";
 import Close from "@/components/ui/Icon/Close";
 import OtpInputs from "./OtpInputs";
 import { OTP_LENGTH } from "@/constants/auth";
+import { getErrorType } from "../utils";
 
 function LoginForm() {
   const {
@@ -25,7 +26,7 @@ function LoginForm() {
 
   return (
     <div className="auth-form-wrapper">
-      <form action="" className="space-y-8">
+      <form action="" className="space-y-8 select-none">
         <h2 className="font-IRANSansX-DemiBold lg:font-IRANSansX-Medium text-lg lg:text-[28px]">
           {isSentOtp ? "کد تایید را وارد کنید" : "ورود | ثبت‌نام"}
         </h2>
@@ -44,11 +45,12 @@ function LoginForm() {
               className={`${error ? "text-error-3 border-error-3 bg-[#FFEBE9]" : "border-adadad "} font-IRANSansX-Light text-sm text-404040 lg:font-IRANSansX-Medium lg:text-sm flex-between w-full h-12 rounded-small border pl-3 mt-2`}
             >
               <input
+                dir="ltr"
                 value={identifier}
                 onChange={changeIdentifier}
                 type="text"
-                placeholder="*********09 یا Example@gmail.com"
-                className="size-full px-3 placeholder:text-adadad"
+                placeholder="09********* یا Example@gmail.com"
+                className="size-full px-3 placeholder:text-adadad text-right"
               />
               {identifier && (
                 <button
@@ -62,7 +64,7 @@ function LoginForm() {
           )}
           {error && (
             <p className="max-[380px]:text-xs text-sm text-error-3 mt-2">
-              لطفا شماره همراه خود را به صورت صحیح وارد نمایید
+              لطفا {getErrorType(identifier)} را به صورت صحیح وارد نمایید
             </p>
           )}
 
