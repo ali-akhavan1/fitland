@@ -25,7 +25,7 @@ function useAuth() {
     const isLoginPath = location.pathname.includes("login");
     const isRegisterPath = location.pathname.includes("register");
     if ((isLoginPath || isRegisterPath) && !isSentOtp) {
-      navigate("/auth");
+      navigate("/auth", { replace: true });
     }
   }, []);
 
@@ -54,8 +54,8 @@ function useAuth() {
     let finalOTP = otp.join("").trim();
     const isOtpValid = validateSchema(otpSchema, finalOTP, true);
     if (!isOtpValid) return;
-    if(isExpired) {
-      toast.error("برای شماره موبایل یا ایمیل خود کد تأیید دریافت کنید")
+    if (isExpired) {
+      toast.error("برای شماره موبایل یا ایمیل خود کد تأیید دریافت کنید");
       return;
     }
 
@@ -98,7 +98,6 @@ function useAuth() {
 
   const resetLogin = () => {
     setIsSentOtp(false);
-    // setIdentifier("");
     setOtp(Array(OTP_LENGTH).fill(""));
     setError(null);
     resetCountdown();

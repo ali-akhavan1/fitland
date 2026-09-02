@@ -4,7 +4,7 @@ import { Award, Flash, Star1 } from "iconsax-reactjs";
 
 function Navbar() {
   return (
-    <nav className="hidden lg:flex-between rounded-2xl bg-f9f9f9 px-10 py-4 mt-11.5 font-IRANSansX-Bold text-sm xl:text-base *:flex-ic *:gap-6 xl:*:gap-10">
+    <nav className="hidden lg:flex-between rounded-2xl bg-f9f9f9 text-neutral-black px-10 py-4 mt-11.5 font-IRANSansX-Bold text-sm xl:text-base *:flex-ic *:gap-6 xl:*:gap-10">
       <ul>
         <Link to="/products/?category=men">مردانه</Link>
         <Link to="/products/?category=women">زنانه</Link>

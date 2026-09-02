@@ -26,12 +26,12 @@ function LoginForm() {
 
   return (
     <div className="auth-form-wrapper">
-      <form action="" className="space-y-8 select-none">
+      <form action="" className="select-none">
         <h2 className="font-IRANSansX-DemiBold lg:font-IRANSansX-Medium text-lg lg:text-[28px]">
           {isSentOtp ? "کد تایید را وارد کنید" : "ورود | ثبت‌نام"}
         </h2>
 
-        <div>
+        <div className="my-8">
           {!isSentOtp && (
             <label className="text-sm text-606060">
               لطفا شماره موبایل یا ایمیل خود را وارد کنید
@@ -98,7 +98,7 @@ function LoginForm() {
           {isSentOtp ? "ثبت" : "ادامه"}
         </button>
         {!isSentOtp && (
-          <p className="text-[10px] text-606060">
+          <p className="lg:hidden text-[10px] text-606060 mt-8">
             ورود شما به معنای پذیرش شرایط فیت لند و{" "}
             <Link className="text-secondary-400" to="/privacy">
               قوانین حریم خصوصی

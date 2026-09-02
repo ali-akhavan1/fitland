@@ -1,4 +1,10 @@
-import { Link, Outlet, useMatches, useNavigate } from "react-router";
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useMatches,
+  useNavigate,
+} from "react-router";
 
 import { ArrowRight, ArrowRight2, Home } from "iconsax-reactjs";
 
@@ -8,7 +14,6 @@ import Abstract2 from "../../src/assets/images/auth/auth-abstract2.png";
 import defaultCover from "@/assets/images/auth/login.jpg";
 import otpCover from "@/assets/images/auth/otp.jpg";
 import registerCover from "@/assets/images/auth/register.jpg";
-import { useState } from "react";
 import useAuth from "@/features/auth/hooks/useAuth";
 import Close from "@/components/ui/Icon/Close";
 
@@ -17,10 +22,12 @@ function AuthLayout() {
   const match = matches.find((match) => match.handle?.stage);
   const stage = match?.handle.stage;
   const navigate = useNavigate();
+  const location = useLocation();
   const auth = useAuth();
 
   const goBack = () => {
-    auth.resetLogin();
+    const isRegisterPath = location.pathname.includes("register");
+    isRegisterPath ? auth.resetRegister() : auth.resetLogin();
     navigate(-1, { replace: true });
   };
 
@@ -32,12 +39,15 @@ function AuthLayout() {
             <ArrowRight2 />
           </button>
 
-          <button>
+          <Link to="/">
             <Close size={24} />
-          </button>
+          </Link>
         </div>
 
-        <Link to="/" className={`lg:hidden text-center ${stage === "register" ? "mt-6" : "mt-27"} mb-6`}>
+        <Link
+          to="/"
+          className={`lg:hidden text-center ${stage === "register" ? "mt-6" : "mt-27"} mb-6`}
+        >
           <div className="mb-2">
             <img src={Logo} alt="" />
           </div>

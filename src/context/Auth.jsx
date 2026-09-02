@@ -12,7 +12,7 @@ function AuthProvider({ children }) {
       setIsLoading(true);
       try {
         const res = await getMe();
-        console.log(res);
+        // console.log(res);
         setUser(res.data.user);
         setIsLoading(false);
       } catch (err) {
