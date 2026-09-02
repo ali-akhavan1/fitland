@@ -97,7 +97,7 @@ function useAuth() {
 
   const resetLogin = () => {
     setIsSentOtp(false);
-    setIdentifier("");
+    // setIdentifier("");
     setOtp(Array(OTP_LENGTH).fill(""));
     setError(null);
     resetCountdown();

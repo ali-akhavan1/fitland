@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 
 import { toast } from "sonner";
 
@@ -8,6 +8,7 @@ import { replaceClass, validateSchema } from "@/utils/helper";
 import { registerSchema } from "../validators/schema";
 import { getValidationIssues } from "../utils";
 
+
 function useRegister() {
   const [register, setRegister] = useState({
     fullName: "",
@@ -15,12 +16,20 @@ function useRegister() {
     email: "",
     acceptTerms: false,
   });
-  const navigate = useNavigate();
 
+  const { identifierType, identifier } = useOutletContext()
+  
+  const navigate = useNavigate();
+  
   const handleRegister = async (e) => {
+    console.log(identifierType, identifier)
     e.preventDefault();
     const isRegistrationValid = validateSchema(registerSchema, register, true);
     if (!isRegistrationValid) return;
+    if(identifierType === "mobile" && register.mobile !== identifier) {
+      toast.error("شماره موبایل با قبلی مطابقت نداره!")
+      return;
+    }
 
     try {
       const res = await authService.register(register);
