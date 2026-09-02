@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, redirect } from "react-router";
 
 import AuthLayout from "./layouts/AuthLayout";
 import AppLayout from "./layouts/AppLayout";
@@ -9,7 +9,9 @@ import FAQPage from "./pages/public/FAQ/FAQPage";
 import ProductDetailsPage from "./pages/public/Products/ProductDetailsPage";
 import LoginForm from "./features/auth/components/LoginForm";
 import RegisterForm from "./features/auth/components/RegisterForm";
-
+import { getMe } from "./features/auth/services/auth.service";
+import DashboardPage from "./pages/user/DashboardPage";
+import { toast } from "sonner";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +23,20 @@ const router = createBrowserRouter([
       { path: "product/:productID", element: <ProductDetailsPage /> },
       { path: "faq", element: <FAQPage /> },
       { path: "cart", element: <div>سبد خرید</div> },
-      { path: "dashboard", handle: { isFooterShow: false } },
+      {
+        path: "dashboard",
+        handle: { isFooterShow: false },
+        element: <DashboardPage />,
+        loader: async () => {
+          try {
+            const { data } = await getMe();
+            return data.user;
+          } catch (error) {
+            toast.warning(error.data.message);
+            return redirect("/auth");
+          }
+        },
+      },
     ],
   },
   {
@@ -30,7 +45,11 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <LoginForm /> },
       { path: "login", element: <LoginForm />, handle: { stage: "otp" } },
-      { path: "register", element: <RegisterForm />, handle: { stage: "register" } },
+      {
+        path: "register",
+        element: <RegisterForm />,
+        handle: { stage: "register" },
+      },
     ],
   },
   {
