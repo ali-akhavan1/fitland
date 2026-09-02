@@ -22,8 +22,9 @@ function useAuth() {
     useCountdown(120);
 
   useEffect(() => {
-    const isLoginRoute = location.pathname.includes("login");
-    if (isLoginRoute && !isSentOtp) {
+    const isLoginPath = location.pathname.includes("login");
+    const isRegisterPath = location.pathname.includes("register");
+    if ((isLoginPath || isRegisterPath) && !isSentOtp) {
       navigate("/auth");
     }
   }, []);

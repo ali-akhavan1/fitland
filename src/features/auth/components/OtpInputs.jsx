@@ -33,7 +33,7 @@ function OtpInputs({ length = 5, otp, setOtp }) {
     inputRefs.current[index].setSelectionRange(1, 1);
 
     if (index > 0 && !otp[index - 1]) {
-      inputRefs.current[index - 1].focus();
+      inputRefs.current[otp.indexOf("")].focus();
     }
   };
 

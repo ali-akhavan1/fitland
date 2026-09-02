@@ -27,7 +27,7 @@ function useRegister() {
     const isRegistrationValid = validateSchema(registerSchema, register, true);
     if (!isRegistrationValid) return;
     if(identifierType === "mobile" && register.mobile !== identifier) {
-      toast.error("شماره موبایل با قبلی مطابقت نداره!")
+      toast.error("شماره موبایل با شماره‌ای که کد تأیید برای آن ارسال شده مطابقت ندارد")
       return;
     }
 
