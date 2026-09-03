@@ -4,6 +4,7 @@ import { emailSchema, mobileSchema } from "./schema";
 
 const getIdentifierSchema = (value) => {
   const type = getIdentifierType(value);
+  console.log(type)
 
   if (type === "mobile") {
     return mobileSchema;
@@ -20,6 +21,7 @@ const validateIdentifier = (value, showToast = false) => {
   if (!schema) return false;
 
   const result = schema.safeParse(value.trim());
+  console.log(result)
   const isValid = result.success;
 
   if (!isValid) {

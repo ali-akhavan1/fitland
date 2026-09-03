@@ -16,6 +16,7 @@ function useAuth() {
   const [identifierType, setIdentifierType] = useState("");
   const [otp, setOtp] = useState(Array(OTP_LENGTH).fill(""));
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { restartCountdown, resetCountdown, getFormattedCounter, isExpired } =
@@ -31,22 +32,25 @@ function useAuth() {
 
   const sendOtpToUser = async () => {
     setError(false);
-    const isIdentifierValid = validateIdentifier(identifier);
+    const isIdentifierValid = validateIdentifier(identifier, true);
     if (!isIdentifierValid) {
-      setError(true);
-      return;
+      return setError(true);
     }
 
+    setIsLoading(true);
     try {
-      const res = await authService.sendOTP({ identifier: identifier.trim() });
-      console.log(res.data);
+      const { data } = await authService.sendOTP({
+        identifier: identifier.trim(),
+      });
+      console.log(data);
       setIsSentOtp(true);
       restartCountdown();
-      setIdentifierType(res.data.type);
+      setIdentifierType(data.type);
       navigate("/auth/login");
     } catch (err) {
-      console.log(err);
-      toast.error(err.data.message);
+      toast.error(err?.data.message || "مشکلی پیش آمده، دوباره تلاش کنید");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -59,30 +63,29 @@ function useAuth() {
       return;
     }
 
+    setIsLoading(true);
     try {
       const res = await authService.verifyOTP({ identifier, otp: finalOTP });
-      console.log(res);
       resetCountdown();
       toast.success(res.message);
       if (res.data.isNewUser) {
-        navigate("/auth/register");
-        return;
+        return navigate("/auth/register", { replace: true });
       }
       navigate("/", { replace: true });
     } catch (err) {
-      console.log(err.data);
-      toast.error(err.data.message);
+      toast.error(err?.data.message || "مشکلی پیش آمده، دوباره تلاش کنید");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const resendOtp = async () => {
     try {
-      const res = await authService.sendOTP({ identifier: identifier.trim() });
-      console.log(res.data);
+      await authService.sendOTP({ identifier: identifier.trim() });
       setIsSentOtp(true);
       restartCountdown();
     } catch (err) {
-      toast.error(err.data.message);
+      toast.error(err?.data.message || "مشکلی پیش آمده، دوباره تلاش کنید");
     }
   };
 
@@ -117,6 +120,7 @@ function useAuth() {
     identifier,
     identifierType,
     otp,
+    isLoading,
     handleLogin,
     resendOtp,
     resetLogin,

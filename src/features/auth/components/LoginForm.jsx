@@ -1,12 +1,11 @@
-import { Link, useMatches, useOutletContext } from "react-router";
+import { Link, useOutletContext } from "react-router";
 
-import { ArrowRight } from "iconsax-reactjs";
-
-import useAuth from "../hooks/useAuth";
-import Close from "@/components/ui/Icon/Close";
 import OtpInputs from "./OtpInputs";
 import { OTP_LENGTH } from "@/constants/auth";
 import { getErrorType } from "../utils";
+import Spinner from "@/components/ui/Icon/Spinner";
+import BackButton from "./BackButton";
+import LoginInput from "./LoginInput";
 
 function LoginForm() {
   const {
@@ -22,12 +21,18 @@ function LoginForm() {
     isExpired,
     resetIdentifier,
     error,
+    isLoading,
   } = useOutletContext();
+
+  const handleResendOTP = (e) => {
+    e.preventDefault();
+    resendOtp();
+  };
 
   return (
     <div className="auth-form-wrapper">
       <form action="" className="select-none">
-        <h2 className="font-IRANSansX-DemiBold lg:font-IRANSansX-Medium text-lg lg:text-[28px]">
+        <h2 className="auth-form-title">
           {isSentOtp ? "کد تایید را وارد کنید" : "ورود | ثبت‌نام"}
         </h2>
 
@@ -41,26 +46,12 @@ function LoginForm() {
           {isSentOtp ? (
             <OtpInputs length={OTP_LENGTH} otp={otp} setOtp={setOtp} />
           ) : (
-            <div
-              className={`${error ? "text-error-3 border-error-3 bg-[#FFEBE9]" : "border-adadad "} font-IRANSansX-Light text-sm text-404040 lg:font-IRANSansX-Medium lg:text-sm flex-between w-full h-12 rounded-small border pl-3 mt-2`}
-            >
-              <input
-                dir="ltr"
-                value={identifier}
-                onChange={changeIdentifier}
-                type="text"
-                placeholder="09********* یا Example@gmail.com"
-                className="size-full px-3 placeholder:text-adadad text-right"
-              />
-              {identifier && (
-                <button
-                  className={`${error ? "text-error-3" : ""} size-4.5 shrink-0`}
-                  onClick={resetIdentifier}
-                >
-                  <Close />
-                </button>
-              )}
-            </div>
+            <LoginInput
+              identifier={identifier}
+              onChange={changeIdentifier}
+              onReset={resetIdentifier}
+              error={error}
+            />
           )}
           {error && (
             <p className="max-[380px]:text-xs text-sm text-error-3 mt-2">
@@ -77,10 +68,7 @@ function LoginForm() {
                 <button
                   className={isExpired ? "text-primary" : "text-cbcbcb"}
                   disabled={!isExpired}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    resendOtp();
-                  }}
+                  onClick={handleResendOTP}
                 >
                   ارسال دوباره
                 </button>
@@ -94,8 +82,13 @@ function LoginForm() {
           )}
         </div>
 
-        <button type="button" onClick={handleLogin} className="submit-btn">
-          {isSentOtp ? "ثبت" : "ادامه"}
+        <button
+          disabled={isLoading}
+          type="button"
+          onClick={handleLogin}
+          className={`submit-btn ${isLoading && "bg-primary-400"}`}
+        >
+          {isLoading ? <Spinner size={24} /> : isSentOtp ? "ثبت" : "ادامه"}
         </button>
         {!isSentOtp && (
           <p className="lg:hidden text-[10px] text-606060 mt-8">
@@ -108,18 +101,7 @@ function LoginForm() {
         )}
       </form>
 
-      {isSentOtp && (
-        <Link
-          onClick={resetLogin}
-          to="/auth"
-          className="hidden lg:flex-ic gap-2 w-fit mt-8"
-        >
-          <ArrowRight />
-          <span className="text-lg font-IRANSansX-DemiBold text-404040">
-            صفحه قبلی
-          </span>
-        </Link>
-      )}
+      {isSentOtp && <BackButton to="/auth" onClick={resetLogin} />}
     </div>
   );
 }

@@ -6,7 +6,7 @@ import {
   useNavigate,
 } from "react-router";
 
-import { ArrowRight, ArrowRight2, Home } from "iconsax-reactjs";
+import { ArrowRight2, Home } from "iconsax-reactjs";
 
 import Logo from "../../public/svg/app-logo.svg";
 import Abstract1 from "../../src/assets/images/auth/auth-abstract.png";
