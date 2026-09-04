@@ -1,16 +1,25 @@
 import { useContext } from "react";
 import { Link } from "react-router";
 
-import { ArrowLeft2, CloseSquare, User } from "iconsax-reactjs";
+import {
+  ArrowLeft2,
+  Award,
+  CloseSquare,
+  Flash,
+  Home2,
+  Star1,
+  User,
+} from "iconsax-reactjs";
 
 import Logo from "../../../../public/svg/app-logo.svg";
-import menus from "@/constants/navmenu";
 import NavmenuItem from "./NavmenuItem";
 import { AuthContext } from "@/context/Auth";
+import useCategories from "@/features/categories/hooks/useCategories";
 
 function Navmenu({ onToggle, isOpen }) {
-  const { user, isLoading } = useContext(AuthContext);
-
+  const { user, isLoading: authIsLoading } = useContext(AuthContext);
+  const { categories, isLoading } = useCategories();
+  console.log(categories);
   return (
     <div className="lg:hidden text-neutral-black">
       <div
@@ -34,7 +43,7 @@ function Navmenu({ onToggle, isOpen }) {
               <span className="bg-ededed flex-center size-12 rounded-full">
                 <User />
               </span>
-              {!isLoading && user ? (
+              {!authIsLoading && user ? (
                 <div className="h-12 flex flex-col justify-between">
                   <span className="text-sm line-clamp-1">{user.fullName}</span>
                   <span className="text-xs">{user.mobile}</span>
@@ -49,10 +58,48 @@ function Navmenu({ onToggle, isOpen }) {
         </header>
 
         <main className="pt-5">
-          <ul className="space-y-4">
-            {menus.map((menu) => (
-              <NavmenuItem key={menu.id} {...menu} />
-            ))}
+          <ul className="space-y-4 select-none">
+            <li>
+              <Link
+                to="/"
+                className="flex-ic gap-2.5 p-2 rounded-small transition-colors"
+              >
+                <Home2 />
+                خانه
+              </Link>
+            </li>
+            {!isLoading &&
+              categories.length > 0 &&
+              categories.map((category) => (
+                <NavmenuItem key={category._id} {...category} />
+              ))}
+            <li>
+              <Link
+                to="/products?sort=newest"
+                className="flex-ic gap-2.5 p-2 rounded-small transition-colors"
+              >
+                <Star1 />
+                جدیدترین محصولات
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/products?sort=bestSelling"
+                className="flex-ic gap-2.5 p-2 rounded-small transition-colors"
+              >
+                <Award />
+                پرفروش‌ترین محصولات
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/products/?hasDiscount=true"
+                className="flex-ic gap-2.5 p-2 rounded-small transition-colors"
+              >
+                <Flash />
+                تخفیفات ویژه
+              </Link>
+            </li>
           </ul>
         </main>
       </div>
