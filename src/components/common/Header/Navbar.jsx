@@ -1,9 +1,10 @@
 import { useState } from "react";
-
 import { Link } from "react-router";
 
 import { Award, Flash, Star1 } from "iconsax-reactjs";
+
 import useCategories from "@/features/categories/hooks/useCategories";
+import MegaMenu from "@/features/categories/components/MegaMenu";
 
 function Navbar() {
   const { categories, isLoading } = useCategories();
@@ -33,6 +34,9 @@ function Navbar() {
               onMouseLeave={closeMegaMenu}
             >
               <Link to={`/category/${category.slug}`}>{category.title}</Link>
+              {isOpen && category._id === activeCategory._id && (
+                <MegaMenu category={activeCategory} />
+              )}
             </li>
           ))}
       </ul>

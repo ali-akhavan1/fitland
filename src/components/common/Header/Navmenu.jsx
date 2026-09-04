@@ -19,7 +19,7 @@ import useCategories from "@/features/categories/hooks/useCategories";
 function Navmenu({ onToggle, isOpen }) {
   const { user, isLoading: authIsLoading } = useContext(AuthContext);
   const { categories, isLoading } = useCategories();
-  console.log(categories);
+
   return (
     <div className="lg:hidden text-neutral-black">
       <div
