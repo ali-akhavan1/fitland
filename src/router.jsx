@@ -21,6 +21,10 @@ const router = createBrowserRouter([
       { index: true, handle: { hasTopbar: true }, element: <HomePage /> },
       { path: "products", element: <ProductsPage /> },
       { path: "product/:productID", element: <ProductDetailsPage /> },
+      {
+        path: "category/:categorySlug/:subCategorySlug?/:leafSlug?",
+        element: <ProductsPage />,
+      },
       { path: "faq", element: <FAQPage /> },
       { path: "cart", element: <div>سبد خرید</div> },
       {
