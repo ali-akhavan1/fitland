@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 
 import { Award, Flash, Star1 } from "iconsax-reactjs";
 
@@ -33,7 +33,12 @@ function Navbar() {
               onMouseEnter={() => openMegaMenu(category)}
               onMouseLeave={closeMegaMenu}
             >
-              <Link to={`/category/${category.slug}`}>{category.title}</Link>
+              <NavLink
+                className={({ isActive }) => (isActive ? "text-primary" : "")}
+                to={`/category/${category.slug}`}
+              >
+                {category.title}
+              </NavLink>
               {isOpen && category._id === activeCategory._id && (
                 <MegaMenu category={activeCategory} />
               )}
