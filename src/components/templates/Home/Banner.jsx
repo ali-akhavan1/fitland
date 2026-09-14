@@ -2,7 +2,7 @@ import banner1 from "@/assets/images/banner/banner-1.jpg";
 import banner2 from "@/assets/images/banner/banner-2.jpg";
 import banner3 from "@/assets/images/banner/banner-3.jpg";
 
-function Banner({ children, bannerName, customClass }) {
+function Banner({ children, bannerName, customClass = "" }) {
   const banners = {
     "banner-1": banner1,
     "banner-2": banner2,

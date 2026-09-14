@@ -57,6 +57,26 @@
   input {
     @apply outline-none;
   }
+
+  input[type="range"]::-webkit-slider-thumb {
+    @apply appearance-none relative size-4 border-4 border-secondary bg-white rounded-full pointer-events-auto cursor-grab;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    @apply appearance-none relative size-4 border-4 border-secondary bg-white rounded-full pointer-events-auto cursor-grab;
+  }
+
+  /* body::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  body::-webkit-scrollbar-track {
+    @apply bg-f9f9f9;
+  }
+
+  body::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-adadad;
+  } */
 }
 
 @theme {
@@ -111,6 +131,7 @@
   --color-info-3: #0f5894;
   --color-info-2: #29b6f6;
   --color-info-1: #c7f2fc;
+  --color-skelton: #ebe6e7;
 
   --radius-small: 0.5rem;
   --radius-medium: 1rem;
@@ -132,6 +153,10 @@
 
 @utility flex-between {
   @apply flex items-center justify-between;
+}
+
+@utility absolute-center {
+  @apply absolute top-1/2 left-0 -translate-y-1/2;
 }
 
 @layer components {
@@ -156,6 +181,18 @@
     @apply max-[380px]:w-full w-89.5 md:w-103 lg:w-114 py-8 px-6 lg:p-8 border bg-white border-ededed rounded-small font-IRANSansX-Medium shadow-[0_0_12px_rgba(0,0,0,0.08)];
   }
 
+  /* ===== Products Page ===== */
+  .range-input {
+    @apply w-full absolute top-1/2 left-0 -translate-y-1/2 pointer-events-none appearance-none bg-transparent;
+  }
+
+  .page-item {
+    @apply flex-center size-6 cursor-pointer rounded-small transition-all;
+  }
+
+  .active-page-item {
+    @apply !size-9 bg-secondary-850 text-white;
+  }
 
   /* ===== Footer ===== */
   .footer-item {

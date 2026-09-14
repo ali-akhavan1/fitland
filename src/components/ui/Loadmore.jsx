@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Loadmore({ children, title, customClass }) {
+function Loadmore({ children, title, customClass = "" }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleLoadmore = () => {

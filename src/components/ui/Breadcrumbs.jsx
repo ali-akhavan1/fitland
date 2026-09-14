@@ -4,7 +4,7 @@ import { ArrowLeft2 } from "iconsax-reactjs";
 
 import useBreadcrumb from "@/features/products/hooks/useBreadcrumb";
 
-function Breadcrumbs({ customClass }) {
+function Breadcrumbs({ customClass = "" }) {
   const breadcrumbItems = useBreadcrumb();
 
   return (
