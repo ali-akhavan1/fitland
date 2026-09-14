@@ -5,4 +5,9 @@ const getCategories = async () => {
   return data;
 };
 
-export { getCategories };
+const getSubCategories = async () => {
+  const { data } = await api.get("/subcategories");
+  return data;
+};
+
+export { getCategories, getSubCategories };

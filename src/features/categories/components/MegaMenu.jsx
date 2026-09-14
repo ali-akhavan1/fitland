@@ -23,7 +23,9 @@ function MegaMenu({ category }) {
                     key={leaf._id}
                     className="w-fit hover:-translate-x-1 transition-all"
                   >
-                    <Link to={`category/${category.slug}/${leaf.slug}`}>
+                    <Link
+                      to={`category/${category.slug}/${subCategory.slug}/${leaf.slug}`}
+                    >
                       {leaf.title}
                     </Link>
                   </li>

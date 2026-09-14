@@ -7,7 +7,10 @@ const replaceClass = (elem, removeClass, addClass) => {
 
 const normalize = (value) => {
   if (typeof value !== "string") return value;
-  return value.split(" ").filter(char => char).join(" ");
+  return value
+    .split(" ")
+    .filter((char) => char)
+    .join(" ");
 };
 
 const validateSchema = (schema, value, showToast = false) => {
@@ -20,4 +23,19 @@ const validateSchema = (schema, value, showToast = false) => {
   return true;
 };
 
-export { validateSchema, replaceClass, normalize };
+const formatPrice = (value) => {
+  if (!value) return "";
+  return Number(value).toLocaleString();
+};
+
+const getDiscountedPrice = (price, discount) => {
+  return price - (price * discount) / 100;
+};
+
+export {
+  validateSchema,
+  replaceClass,
+  normalize,
+  formatPrice,
+  getDiscountedPrice,
+};

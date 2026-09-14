@@ -1,6 +1,13 @@
+import { ArrowDown2 } from "iconsax-reactjs";
 import { useState } from "react";
 
-function Accordion({ title, Icon, headerClass, bodyClass, children }) {
+function Accordion({
+  title,
+  Icon = <ArrowDown2 />,
+  headerClass = "",
+  bodyClass = "",
+  children,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
@@ -14,9 +21,7 @@ function Accordion({ title, Icon, headerClass, bodyClass, children }) {
         className={`flex-between text-white border-secondary-400 cursor-pointer ${headerClass}`}
         onClick={toggleAccordion}
       >
-        <span className="text-sm font-IRANSansX-Medium select-none">
-          {title}
-        </span>
+        <span className="font-IRANSansX-Medium select-none">{title}</span>
         <div className={`${isOpen ? "rotate-180" : ""} transition-all`}>
           {Icon}
         </div>
